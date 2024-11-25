@@ -17,3 +17,4 @@ CREATE TABLE accounts (
 --  Sample Data (to be removed)
 INSERT INTO users (username, password) VALUES ('john_doe', '12345'); 
 INSERT INTO accounts (user_id, account_type, balance) VALUES (1, 'Savings', 500.0);
+
