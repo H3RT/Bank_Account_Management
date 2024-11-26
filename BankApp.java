@@ -1,24 +1,23 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class BankApp extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
 
     public BankApp() {
-        setTitle("Bank System");
+        setTitle("Banking System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(500, 400);
         setLocationRelativeTo(null);
 
-        // Add pages to the card layout
+        // Adding pages to the card layout
         mainPanel.add(createLoginPage(), "Login");
         mainPanel.add(createWelcomePage(), "Welcome");
         mainPanel.add(createDepositPage(), "Deposit");
         mainPanel.add(createWithdrawPage(), "Withdraw");
         mainPanel.add(createTransferPage(), "Transfer");
+        mainPanel.add(createBalancePage(), "CheckBalance");
 
         add(mainPanel);
         cardLayout.show(mainPanel, "Login"); // Start with the login page
@@ -27,13 +26,21 @@ public class BankApp extends JFrame {
     // Login Page
     private JPanel createLoginPage() {
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel("Login", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 20));
+        panel.setBackground(new Color(200, 230, 250));
+
+        JLabel title = new JLabel("Login", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setForeground(new Color(50, 70, 120));
 
         JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        formPanel.setOpaque(false);
+
         JTextField usernameField = new JTextField();
         JPasswordField passwordField = new JPasswordField();
         JButton loginButton = new JButton("Login");
+        loginButton.setBackground(new Color(50, 150, 90));
+        loginButton.setForeground(Color.WHITE);
 
         formPanel.add(new JLabel("Username:"));
         formPanel.add(usernameField);
@@ -42,135 +49,135 @@ public class BankApp extends JFrame {
         formPanel.add(new JLabel()); // Spacer
         formPanel.add(loginButton);
 
-        panel.add(label, BorderLayout.NORTH);
-        panel.add(formPanel, BorderLayout.CENTER);
-
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            // Dummy login check for now
-            if (username.equals("user") && password.equals("pass")) {
+            if (username.equals("user") && password.equals("pass")) { // Dummy login check
                 cardLayout.show(mainPanel, "Welcome");
             } else {
-                JOptionPane.showMessageDialog(this, "Invalid login!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Invalid login credentials!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
+        panel.add(title, BorderLayout.NORTH);
+        panel.add(formPanel, BorderLayout.CENTER);
         return panel;
     }
 
     // Welcome Page
     private JPanel createWelcomePage() {
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel("Welcome to the Bank!", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 20));
+        panel.setBackground(new Color(240, 250, 255));
 
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 10, 10));
+        JLabel title = new JLabel("Welcome to the Bank System!", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 22));
+        title.setForeground(new Color(40, 80, 130));
+
+        JPanel buttonPanel = new JPanel(new GridLayout(5, 1, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
+        buttonPanel.setOpaque(false);
+
         JButton depositButton = new JButton("Deposit");
         JButton withdrawButton = new JButton("Withdraw");
         JButton transferButton = new JButton("Transfer");
+        JButton balanceButton = new JButton("Check Balance");
+        JButton logoutButton = new JButton("Logout");
+
+        for (JButton button : new JButton[]{depositButton, withdrawButton, transferButton, balanceButton, logoutButton}) {
+            button.setBackground(new Color(60, 140, 200));
+            button.setForeground(Color.WHITE);
+            button.setFont(new Font("Arial", Font.PLAIN, 16));
+        }
+
+        depositButton.addActionListener(e -> cardLayout.show(mainPanel, "Deposit"));
+        withdrawButton.addActionListener(e -> cardLayout.show(mainPanel, "Withdraw"));
+        transferButton.addActionListener(e -> cardLayout.show(mainPanel, "Transfer"));
+        balanceButton.addActionListener(e -> cardLayout.show(mainPanel, "CheckBalance"));
+        logoutButton.addActionListener(e -> cardLayout.show(mainPanel, "Login"));
 
         buttonPanel.add(depositButton);
         buttonPanel.add(withdrawButton);
         buttonPanel.add(transferButton);
+        buttonPanel.add(balanceButton);
+        buttonPanel.add(logoutButton);
 
-        panel.add(label, BorderLayout.NORTH);
+        panel.add(title, BorderLayout.NORTH);
         panel.add(buttonPanel, BorderLayout.CENTER);
-
-        // Navigation buttons
-        depositButton.addActionListener(e -> cardLayout.show(mainPanel, "Deposit"));
-        withdrawButton.addActionListener(e -> cardLayout.show(mainPanel, "Withdraw"));
-        transferButton.addActionListener(e -> cardLayout.show(mainPanel, "Transfer"));
-
         return panel;
     }
 
     // Deposit Page
     private JPanel createDepositPage() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel("Deposit Money", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 20));
-
-        JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 10));
-        JTextField amountField = new JTextField();
-        JButton depositButton = new JButton("Deposit");
-
-        formPanel.add(new JLabel("Amount:"));
-        formPanel.add(amountField);
-        formPanel.add(new JLabel()); // Spacer
-        formPanel.add(depositButton);
-
-        panel.add(label, BorderLayout.NORTH);
-        panel.add(formPanel, BorderLayout.CENTER);
-
-        depositButton.addActionListener(e -> {
-            String amountText = amountField.getText();
-            // Dummy deposit action
-            JOptionPane.showMessageDialog(this, "You deposited: " + amountText, "Success", JOptionPane.INFORMATION_MESSAGE);
-            cardLayout.show(mainPanel, "Welcome");
-        });
-
-        return panel;
+        return createTransactionPage("Deposit Money", "Deposit", "Welcome");
     }
 
     // Withdraw Page
     private JPanel createWithdrawPage() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel("Withdraw Money", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 20));
-
-        JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 10));
-        JTextField amountField = new JTextField();
-        JButton withdrawButton = new JButton("Withdraw");
-
-        formPanel.add(new JLabel("Amount:"));
-        formPanel.add(amountField);
-        formPanel.add(new JLabel()); // Spacer
-        formPanel.add(withdrawButton);
-
-        panel.add(label, BorderLayout.NORTH);
-        panel.add(formPanel, BorderLayout.CENTER);
-
-        withdrawButton.addActionListener(e -> {
-            String amountText = amountField.getText();
-            // Dummy withdraw action
-            JOptionPane.showMessageDialog(this, "You withdrew: " + amountText, "Success", JOptionPane.INFORMATION_MESSAGE);
-            cardLayout.show(mainPanel, "Welcome");
-        });
-
-        return panel;
+        return createTransactionPage("Withdraw Money", "Withdraw", "Welcome");
     }
 
     // Transfer Page
     private JPanel createTransferPage() {
+        JPanel panel = createTransactionPage("Transfer Money", "Transfer", "Welcome");
+        JLabel toLabel = new JLabel("Recipient Username:");
+        JTextField toField = new JTextField();
+        ((JPanel) panel.getComponent(1)).add(toLabel, 0);
+        ((JPanel) panel.getComponent(1)).add(toField, 1);
+        return panel;
+    }
+
+    // Check Balance Page
+    private JPanel createBalancePage() {
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel("Transfer Money", SwingConstants.CENTER);
+        panel.setBackground(new Color(230, 240, 255));
+
+        JLabel label = new JLabel("Your Balance: $500.0", SwingConstants.CENTER); // Dummy balance
         label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setForeground(new Color(50, 100, 150));
 
-        JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        JTextField toUserField = new JTextField();
+        JButton backButton = new JButton("Back to Menu");
+        backButton.setBackground(new Color(60, 140, 200));
+        backButton.setForeground(Color.WHITE);
+
+        backButton.addActionListener(e -> cardLayout.show(mainPanel, "Welcome"));
+
+        panel.add(label, BorderLayout.CENTER);
+        panel.add(backButton, BorderLayout.SOUTH);
+        return panel;
+    }
+
+    // Helper Method for Transaction Pages
+    private JPanel createTransactionPage(String titleText, String buttonText, String backPage) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(new Color(230, 240, 255));
+
+        JLabel label = new JLabel(titleText, SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setForeground(new Color(50, 100, 150));
+
+        JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        formPanel.setOpaque(false);
+
         JTextField amountField = new JTextField();
-        JButton transferButton = new JButton("Transfer");
+        JButton actionButton = new JButton(buttonText);
+        actionButton.setBackground(new Color(50, 150, 90));
+        actionButton.setForeground(Color.WHITE);
 
-        formPanel.add(new JLabel("To User:"));
-        formPanel.add(toUserField);
         formPanel.add(new JLabel("Amount:"));
         formPanel.add(amountField);
         formPanel.add(new JLabel()); // Spacer
-        formPanel.add(transferButton);
+        formPanel.add(actionButton);
+
+        actionButton.addActionListener(e -> {
+            String amountText = amountField.getText();
+            JOptionPane.showMessageDialog(this, buttonText + " Successful: $" + amountText, "Success", JOptionPane.INFORMATION_MESSAGE);
+            cardLayout.show(mainPanel, backPage);
+        });
 
         panel.add(label, BorderLayout.NORTH);
         panel.add(formPanel, BorderLayout.CENTER);
-
-        transferButton.addActionListener(e -> {
-            String toUser = toUserField.getText();
-            String amountText = amountField.getText();
-            // Dummy transfer action
-            JOptionPane.showMessageDialog(this, "You transferred: " + amountText + " to " + toUser, "Success", JOptionPane.INFORMATION_MESSAGE);
-            cardLayout.show(mainPanel, "Welcome");
-        });
-
         return panel;
     }
 
