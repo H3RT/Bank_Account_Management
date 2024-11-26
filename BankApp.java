@@ -20,7 +20,7 @@ public class BankApp extends JFrame {
         mainPanel.add(createBalancePage(), "CheckBalance");
 
         add(mainPanel);
-        cardLayout.show(mainPanel, "Login"); // Start with the login page
+        cardLayout.show(mainPanel, "Login"); 
     }
 
     // Login Page
