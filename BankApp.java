@@ -46,16 +46,21 @@ public class BankApp extends JFrame {
         formPanel.add(usernameField);
         formPanel.add(new JLabel("Password:"));
         formPanel.add(passwordField);
-        formPanel.add(new JLabel()); // Spacer
+        formPanel.add(new JLabel()); 
         formPanel.add(loginButton);
 
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            if (username.equals("user") && password.equals("pass")) { // Dummy login check
+
+            //dummy log in. Username: user and Password: pass
+            if (username.equals("user") && password.equals("pass")) { 
+                //to take user to the welcome page after loggin in
                 cardLayout.show(mainPanel, "Welcome");
             } else {
+
+                //if log in credentials are wrong it should handle this error
                 JOptionPane.showMessageDialog(this, "Invalid login credentials!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -78,6 +83,7 @@ public class BankApp extends JFrame {
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
         buttonPanel.setOpaque(false);
 
+        //buttons
         JButton depositButton = new JButton("Deposit");
         JButton withdrawButton = new JButton("Withdraw");
         JButton transferButton = new JButton("Transfer");
@@ -132,10 +138,12 @@ public class BankApp extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(new Color(230, 240, 255));
 
-        JLabel label = new JLabel("Your Balance: $500.0", SwingConstants.CENTER); // Dummy balance
+        //a dummy balance of R500 displayed
+        JLabel label = new JLabel("Your Balance: R500.0", SwingConstants.CENTER); 
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(new Color(50, 100, 150));
 
+        //for going back
         JButton backButton = new JButton("Back to Menu");
         backButton.setBackground(new Color(60, 140, 200));
         backButton.setForeground(Color.WHITE);
@@ -167,12 +175,12 @@ public class BankApp extends JFrame {
 
         formPanel.add(new JLabel("Amount:"));
         formPanel.add(amountField);
-        formPanel.add(new JLabel()); // Spacer
+        formPanel.add(new JLabel()); 
         formPanel.add(actionButton);
 
         actionButton.addActionListener(e -> {
             String amountText = amountField.getText();
-            JOptionPane.showMessageDialog(this, buttonText + " Successful: $" + amountText, "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, buttonText + " Successful: R" + amountText, "Success", JOptionPane.INFORMATION_MESSAGE);
             cardLayout.show(mainPanel, backPage);
         });
 
