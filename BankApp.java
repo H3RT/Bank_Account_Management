@@ -2,8 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class BankApp extends JFrame {
-    private CardLayout cardLayout = new CardLayout();
-    private JPanel mainPanel = new JPanel(cardLayout);
+    private final CardLayout cardLayout = new CardLayout();
+    private final JPanel mainPanel = new JPanel(cardLayout);
 
     public BankApp() {
         setTitle("Banking System");

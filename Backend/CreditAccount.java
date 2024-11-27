@@ -1,9 +1,9 @@
 public class CreditAccount {
-    private String accountHolderName;
-    private String accountNumber;
+    private final String accountHolderName;
+    private final String accountNumber;
     private double balance;
-    private double creditLimit;
-    private double interestRate;
+    private final double creditLimit;
+    private final double interestRate;
 
     // Constructor
     public CreditAccount(String accountHolderName, String accountNumber, double creditLimit, double interestRate) {
