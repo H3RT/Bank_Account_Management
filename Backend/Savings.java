@@ -22,13 +22,16 @@ public class Savings extends Account {
             return false;
         }
     }
+    @Override
     public double getBalance() {
         return balance;
     }
 
+    @Override
     public String getAccountHolderName() {
         return accountHolderName;
     }
+    @Override
     public void accountDetails(){
     System.out.println(accountHolderName);
     System.out.println(accountNumber);

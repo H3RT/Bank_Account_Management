@@ -30,12 +30,31 @@ public abstract class Account {
         }
     }
 
+      // method to send money to another account 
+      public boolean sendMoney(Account recipient, double amount) {
+        if (amount > 0 && amount <= balance) {
+            this.balance -= amount;
+            recipient.balance += amount;
+            System.out.println("Successfully sent " + amount + " to " + recipient.getAccountHolderName());
+            return true;
+        } else {
+            System.out.println("Failed to send money. Insufficient balance or invalid amount.");
+            return false;
+        }
+    }
+
+
+
     public double getBalance() {
         return balance;
     }
 
     public String getAccountHolderName() {
         return accountHolderName;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
     public abstract void accountDetails(); 

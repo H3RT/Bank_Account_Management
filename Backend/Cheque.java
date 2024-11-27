@@ -33,6 +33,7 @@ public class Cheque extends Account{
             return accountHolderName;
         }
 
+    @Override
     public void accountDetails(){
         System.out.println(accountHolderName);
         System.out.println(accountNumber);
