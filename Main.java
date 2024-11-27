@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int choice;
-        Savings with = new Savings(2000);
+       // Savings with = new Savings(2000);
         //int total = with.balance;
         double defAmnt;
         System.out.println("Give the account a default balance.");
