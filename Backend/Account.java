@@ -1,61 +1,88 @@
-public abstract class Account {
-    protected String accountHolderName;
-    protected String accountNumber;
-    protected double balance;
+package Backend;
 
-    // Constructor
-    public Account(String accountHolderName, String accountNumber) {
-        this.accountHolderName = accountHolderName;
-        this.accountNumber = accountNumber;
-        this.balance = 0.0; // Default balance is 0
+import java.util.Scanner;
+
+public class Account {
+    public double mainBalance;
+
+
+    public Account (double balance){
+        this.mainBalance = balance;
     }
 
-    // Common methods
-    public void deposit(double amount) {
-        if (amount > 0) {
-            balance += amount;
-            System.out.println("Deposited " + amount + " successfully.");
-        } else {
-            System.out.println("Deposit amount must be positive!");
+    public double deposit(Scanner inp){
+        double amnt;
+        System.out.println("Enter the amount you want deposit: R");
+        amnt = inp.nextDouble();
+        while (amnt <= 0){
+            System.out.println("You cannot deposit an amount of 0 or below");
+            System.out.println("Enter the amount you want deposit: R");
+            amnt = inp.nextDouble();
+            return mainBalance += amnt;
+            //return  mainBalance;
         }
+
+
+        return mainBalance += amnt;
     }
 
-    public boolean withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
-            return true;
-        } else {
-            System.out.println("Insufficient balance or invalid amount.");
-            return false;
+    public double withdraw(Scanner inp){
+        double withd;
+        System.out.println("Enter the amount you want to withdraw: R");
+        withd = inp.nextDouble();
+        while(withd > mainBalance){
+            System.out.println("You cannot withdraw an amount that is greater than your balance.");
+            System.out.println("Enter the amount you want to withdraw: R");
+            withd = inp.nextDouble();
+            return mainBalance-=withd;
         }
+        return mainBalance-=withd;
     }
 
-      // method to send money to another account 
-      public boolean sendMoney(Account recipient, double amount) {
-        if (amount > 0 && amount <= balance) {
-            this.balance -= amount;
-            recipient.balance += amount;
-            System.out.println("Successfully sent " + amount + " to " + recipient.getAccountHolderName());
-            return true;
-        } else {
-            System.out.println("Failed to send money. Insufficient balance or invalid amount.");
-            return false;
+    public double transfer(Scanner inp){
+        double transf;
+        int opt;
+        System.out.println("To which account do you want to transfer the money to?");
+        System.out.println("===================");
+        System.out.println("1. Savings");
+        System.out.println("2. Cheque");
+        System.out.println("====================");
+        opt = inp.nextInt();
+        while(opt < 1 || opt > 2){
+            System.out.println("Invalid option...try again");
+            System.out.println("To which account do you want to transfer the money to?");
+            System.out.println("===================");
+            System.out.println("1. Savings");
+            System.out.println("2. Cheque");
+            System.out.println("====================");
+            opt = inp.nextInt();
         }
+
+        if(opt == 1){
+            //Operations for savings account
+
+
+        } else if (opt == 2) {
+            //Operations for cheque account
+
+
+        }else {
+            System.out.println("Invalid choice");
+        }
+        System.out.println("Enter the amount you want to transfer: R");
+        transf = inp.nextDouble();
+        while(transf > mainBalance){
+            System.out.println("You cannot transfer an amount that is greater than your balance.");
+            System.out.println("Enter the amount you want to withdraw: R");
+            transf = inp.nextDouble();
+            return mainBalance-=transf;
+        }
+
+        return mainBalance-=transf;
     }
 
-
-
-    public double getBalance() {
-        return balance;
+    public void viewBalance(){
+        System.out.println("Your current balance is: R"+String.format("%.2f",mainBalance));
     }
 
-    public String getAccountHolderName() {
-        return accountHolderName;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public abstract void accountDetails(); 
 }

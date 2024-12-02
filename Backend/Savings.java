@@ -1,41 +1,37 @@
+package org.example;
+
+import java.util.*;
 public class Savings extends Account {
-    public Savings(String accountHolderName, String accountNumber) {
-        super(accountHolderName,accountNumber);
-    }
-    // Common methods
-    @Override
-    public void deposit(double amount) {
-        if (amount > 0) {
-            balance += amount;
-            System.out.println("Deposited " + amount + " successfully.");
-        } else {
-            System.out.println("Deposit amount must be positive!");
-        }
-    }
-    @Override
-    public boolean withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
-            return true;
-        } else {
-            System.out.println("Insufficient balance or invalid amount.");
-            return false;
-        }
-    }
-    @Override
-    public double getBalance() {
-        return balance;
+    private static final double INTEREST_RATE = 0.03; 
+
+    public Savings(double balance) {
+        super(balance);
     }
 
-    @Override
-    public String getAccountHolderName() {
-        return accountHolderName;
+    
+    public void addInterest() {
+        double interest = mainBalance * INTEREST_RATE;
+        mainBalance += interest;
+        System.out.println("Interest of R" + String.format("%.2f", interest) + " has been added to your savings account.");
     }
+
+    
     @Override
-    public void accountDetails(){
-    System.out.println(accountHolderName);
-    System.out.println(accountNumber);
-    System.out.println(balance);
+    public double deposit(Scanner inp) {
+        System.out.println("Depositing into Savings Account...");
+        return super.deposit(inp);
+    }
+
+    
+    @Override
+    public double withdraw(Scanner inp) {
+        System.out.println("Withdrawing from Savings Account...");
+        return super.withdraw(inp);
+    }
+
+    
+    @Override
+    public void viewBalance() {
+        System.out.println("Your Savings Account balance is: R" + String.format("%.2f", mainBalance));
     }
 }
-
